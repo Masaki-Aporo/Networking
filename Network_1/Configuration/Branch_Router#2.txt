@@ -1,0 +1,111 @@
+!
+version 15.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Branch_Router_2
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree vlan 20 priority 0
+spanning-tree vlan 10 priority 4096
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0/0
+ ip address 192.168.100.6 255.255.255.252
+ duplex full
+ speed 100
+!
+interface GigabitEthernet0/0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/2
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1/0
+ switchport trunk allowed vlan 10,30
+ switchport mode trunk
+ duplex full
+ speed 100
+!
+interface GigabitEthernet0/1/1
+ switchport access vlan 10
+ switchport mode access
+ duplex full
+ speed 100
+!
+interface GigabitEthernet0/1/2
+ switchport access vlan 20
+ switchport mode access
+ duplex full
+ speed 100
+!
+interface GigabitEthernet0/1/3
+ switchport mode access
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ mac-address 0002.1658.1001
+ ip address 192.168.1.200 255.255.255.0
+ standby 10 ip 192.168.1.254
+ standby 10 preempt
+!
+router bgp 20
+ bgp log-neighbor-changes
+ no synchronization
+ neighbor 192.168.100.5 remote-as 1
+ neighbor 192.168.100.9 remote-as 10
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
